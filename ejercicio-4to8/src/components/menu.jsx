@@ -1,4 +1,5 @@
 import { Link, Outlet } from "react-router-dom"
+import "../assets/style.css"
 function menu() {
     return (
         <div>
@@ -16,4 +17,5 @@ function menu() {
         </div>
     )
 }
+
 export default menu

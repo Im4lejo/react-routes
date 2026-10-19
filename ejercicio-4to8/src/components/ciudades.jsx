@@ -1,28 +1,39 @@
 
-import { Link, Outlet } from "react-router-dom"
+import { Link, Outlet , useSearchParams} from "react-router-dom"
 import Cities from "../data/cities"
 
 function Ciudades() {
-    const compacto = function (city) {
-        return !city.modoCompacto;
-    };
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const ciudadAbierta = searchParams.get("ciudad");
     return (
         <div>
             <h2>Ciudades</h2>
             <ul>
                 {Cities.map(city => (
                     <div key={city.id}>
-                        {city.modoCompacto === true ? (
-                            <Link onClick={compacto(city)}><h3> {city.name}</h3></Link>
-                        ) : (
-                            <>
-                                    <Link onClick={compacto(city)}><h3> {city.name}</h3></Link>
-                                <p>Población: {city.population}</p>
-                            </>
-                        )
-                        }
-                    </div>
 
+                        <h3>{city.name}</h3>
+
+                        <button
+                            onClick={() => {
+                                if (ciudadAbierta === String(city.id)) {
+                                    setSearchParams({});
+                                } else {
+                                    setSearchParams({ ciudad: city.id });
+                                }
+                            }}
+                        >
+                            {ciudadAbierta === String(city.id)
+                                ? "Ocultar"
+                                : "Ver población"}
+                        </button>
+
+                        {ciudadAbierta === String(city.id) && (
+                            <p>Población: {city.population}</p>
+                        )}
+
+                    </div>
                 ))}
 
             </ul>
